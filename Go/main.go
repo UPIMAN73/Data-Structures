@@ -38,7 +38,40 @@ func testList() {
 	List.ListPrintAll(&test)
 }
 
+// Linked List Test
+func testLinkedList() {
+	// List definition
+	var test List.LinkedList[string]
+	var test2 List.LinkedList[string]
+
+	// List value declaration
+	test.Value = "Hello World!"
+
+	// Appending elements to the list
+	List.LinkedListAppend[string](&test, "How are you Today?")
+	List.LinkedListAppend[string](&test, "I am good, how are you?")
+	List.LinkedListAppend[string](&test, "Hi!")
+	List.LinkedListAppendPrevious[string](&test, "Hola!")
+	List.LinkedListAppend[string](&test, "ni hao!")
+
+	// Print the structure and the size of the LinkedList
+	fmt.Println(test)
+	fmt.Println(List.LinkedListSize(&test))
+	fmt.Println(List.LinkedListSize(&test2)) // Has one empty element in there
+
+	// LinkedList Searching
+	fmt.Println(List.LinkedListSearch(&test, "I am good, how are you?"))
+	fmt.Println(List.LinkedListSearch(&test, "Hiiiii!"))
+
+	// Removing Items in the LinkedList
+	List.LinkedListPrintAll(&test)
+	fmt.Println(List.LinkedListSize(&test))
+	List.LinkedListRemove(&test, "Hi!")
+	fmt.Println(List.LinkedListSize(&test))
+	List.LinkedListPrintAll(&test)
+}
+
 // Main
 func main() {
-	testList()
+	testLinkedList()
 }
