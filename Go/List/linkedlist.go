@@ -103,3 +103,36 @@ func LinkedListRemove[T any](list *LinkedList[T], value T) *LinkedList[T] {
 		return LinkedListRemove[T](list.Next, value)
 	}
 }
+
+// Linked List Test
+func TestLinkedList() {
+	// List definition
+	var test LinkedList[string]
+	var test2 LinkedList[string]
+
+	// List value declaration
+	test.Value = "Hello World!"
+
+	// Appending elements to the list
+	LinkedListAppend[string](&test, "How are you Today?")
+	LinkedListAppend[string](&test, "I am good, how are you?")
+	LinkedListAppend[string](&test, "Hi!")
+	LinkedListAppendPrevious[string](&test, "Hola!")
+	LinkedListAppend[string](&test, "ni hao!")
+
+	// Print the structure and the size of the LinkedList
+	fmt.Println(test)
+	fmt.Println(LinkedListSize(&test))
+	fmt.Println(LinkedListSize(&test2)) // Has one empty element in there
+
+	// LinkedList Searching
+	fmt.Println(LinkedListSearch(&test, "I am good, how are you?"))
+	fmt.Println(LinkedListSearch(&test, "Hiiiii!"))
+
+	// Removing Items in the LinkedList
+	LinkedListPrintAll(&test)
+	fmt.Println(LinkedListSize(&test))
+	LinkedListRemove(&test, "Hi!")
+	fmt.Println(LinkedListSize(&test))
+	LinkedListPrintAll(&test)
+}

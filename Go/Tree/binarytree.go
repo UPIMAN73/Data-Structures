@@ -1,12 +1,8 @@
 package Tree
 
-type BinaryTreeNode[T any] struct {
-	Left  *BinaryTreeNode[T]
-	Right *BinaryTreeNode[T]
-	Value T
-}
-
+// Binary Tree Datatype
 type BinaryTree[T any] struct {
-	Size uint64
-	Root *BinaryTreeNode[T]
+	Left  *BinaryTree[T]
+	Right *BinaryTree[T]
+	Value T
 }
