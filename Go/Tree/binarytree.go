@@ -29,7 +29,7 @@ func BinaryTreeAddRight[T any](node *BinaryTree[T], value T) *BinaryTree[T] {
 	return nil
 }
 
-// Print out tree based on values
+// (NEEDS WORK) Print out tree based on values (NEEDS WORK)
 func BinaryTreePrintTree[T any](node *BinaryTree[T], depth uint64) {
 	// Spacing
 	for i := uint64(0); i < depth*10; i++ {
