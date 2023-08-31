@@ -1,10 +1,11 @@
 package main
 
 import (
-	"List"
+	"Tree"
 )
 
 // Main
 func main() {
-	List.TestLinkedList()
+	// List.TestLinkedList()
+	Tree.TestBinaryTree()
 }
