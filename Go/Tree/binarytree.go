@@ -29,6 +29,28 @@ func BinaryTreeAddRight[T any](node *BinaryTree[T], value T) *BinaryTree[T] {
 	return nil
 }
 
+func BinaryTreeDepth[T any](node *BinaryTree[T]) uint64 {
+	if node == nil {
+		return 0
+	}
+	return max(BinaryTreeDepth(node.Left), BinaryTreeDepth(node.Right)) + 1
+}
+
+// Recursive binary tree inversion
+func BinaryTreeInvert[T any](node *BinaryTree[T]) *BinaryTree[T] {
+	// If the node is empty return nil (in this case the node)
+	if node == nil {
+		return node
+	} else {
+		// Recursively invert the nodes, starting with left, then the right
+		leftNode := BinaryTreeInvert[T](node.Left)
+		node.Left = BinaryTreeInvert[T](node.Right)
+		node.Right = leftNode
+	}
+	// Return the node afterwards
+	return node
+}
+
 // (NEEDS WORK) Print out tree based on values (NEEDS WORK)
 func BinaryTreePrintTree[T any](node *BinaryTree[T], depth uint64) {
 	// Spacing
@@ -72,21 +94,6 @@ func BinaryTreePrintTree[T any](node *BinaryTree[T], depth uint64) {
 	fmt.Println(node.Right.Value)
 }
 
-// Recursive binary tree inversion
-func BinaryTreeInvert[T any](node *BinaryTree[T]) *BinaryTree[T] {
-	// If the node is empty return nil (in this case the node)
-	if node == nil {
-		return node
-	} else {
-		// Recursively invert the nodes, starting with left, then the right
-		leftNode := BinaryTreeInvert[T](node.Left)
-		node.Left = BinaryTreeInvert[T](node.Right)
-		node.Right = leftNode
-	}
-	// Return the node afterwards
-	return node
-}
-
 // Test function that demonstrates the use of the datastructure
 func TestBinaryTree() {
 	// Create a binary tree variable
@@ -114,8 +121,10 @@ func TestBinaryTree() {
 	// Add values to some of the leaf nodes
 	BinaryTreeAddRight[string](root.Right, "How are you today?")
 	BinaryTreeAddLeft[string](root.Right, "How you doing?")
-	BinaryTreePrintTree[string](root.Right, 2)
-	BinaryTreePrintTree[string](&root, 1)
+	fmt.Print("Binary Tree Depth: ")
+	fmt.Println(BinaryTreeDepth[string](&root))
+	// BinaryTreePrintTree[string](root.Right, 2)
+	// BinaryTreePrintTree[string](&root, 1)
 
 	// Invert the tree
 	fmt.Println("\n\nInverted Binary Tree:")
