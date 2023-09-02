@@ -1,11 +1,13 @@
 package main
 
 import (
-	"Tree"
+	"Graph"
 )
 
 // Main
 func main() {
 	// List.TestLinkedList()
-	Tree.TestBinaryTree()
+	// Tree.TestBinaryTree()
+	Graph.TestGraph()
+	// Graph.TestWeightedGraph()
 }
