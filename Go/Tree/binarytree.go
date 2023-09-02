@@ -1,6 +1,8 @@
 package Tree
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Binary Tree Datatype
 type BinaryTree[T any] struct {
@@ -29,11 +31,18 @@ func BinaryTreeAddRight[T any](node *BinaryTree[T], value T) *BinaryTree[T] {
 	return nil
 }
 
+// Binary tree depth (or size of the binary tree)
 func BinaryTreeDepth[T any](node *BinaryTree[T]) uint64 {
 	if node == nil {
 		return 0
+	} else {
+		// Having to manually write out this line since the max function doesn't work for some reason
+		if BinaryTreeDepth(node.Left) >= BinaryTreeDepth(node.Right) {
+			return BinaryTreeDepth(node.Left) + 1
+		} else {
+			return BinaryTreeDepth(node.Right) + 1
+		}
 	}
-	return max(BinaryTreeDepth(node.Left), BinaryTreeDepth(node.Right)) + 1
 }
 
 // Recursive binary tree inversion
@@ -52,46 +61,13 @@ func BinaryTreeInvert[T any](node *BinaryTree[T]) *BinaryTree[T] {
 }
 
 // (NEEDS WORK) Print out tree based on values (NEEDS WORK)
-func BinaryTreePrintTree[T any](node *BinaryTree[T], depth uint64) {
-	// Spacing
-	for i := uint64(0); i < depth*10; i++ {
-		fmt.Print(" ")
+func BinaryTreePrintTree[T any](node *BinaryTree[T]) string {
+	if node == nil {
+		return ""
+	} else {
+		// return value of the node
+		return fmt.Sprintf("\t%s\n\t%s\t\t%s\n", node.Value, BinaryTreePrintTree[T](node.Left), BinaryTreePrintTree[T](node.Right))
 	}
-
-	// Print value (at the 'parent')
-	fmt.Println(node.Value)
-
-	// Spacing
-	for i := uint64(0); i < depth*8; i++ {
-		fmt.Print(" ")
-	}
-
-	// Print left branch visual
-	fmt.Print("/")
-
-	// Spacing
-	for i := uint64(0); i < depth*7; i++ {
-		fmt.Print(" ")
-	}
-
-	// Print right branch visual
-	fmt.Println("\\")
-
-	// Spacing
-	for i := uint64(0); i < depth*5; i++ {
-		fmt.Print(" ")
-	}
-
-	// Print right node value
-	fmt.Print(node.Left.Value)
-
-	// Spacing
-	for i := uint64(0); i < depth*3; i++ {
-		fmt.Print(" ")
-	}
-
-	// Print right node value
-	fmt.Println(node.Right.Value)
 }
 
 // Test function that demonstrates the use of the datastructure
@@ -116,19 +92,17 @@ func TestBinaryTree() {
 
 	// Print out contents of the tree
 	fmt.Println("Regular Binary Tree:")
-	BinaryTreePrintTree[string](&root, 0)
+	fmt.Println(BinaryTreePrintTree[string](&root))
 
 	// Add values to some of the leaf nodes
 	BinaryTreeAddRight[string](root.Right, "How are you today?")
 	BinaryTreeAddLeft[string](root.Right, "How you doing?")
 	fmt.Print("Binary Tree Depth: ")
 	fmt.Println(BinaryTreeDepth[string](&root))
-	// BinaryTreePrintTree[string](root.Right, 2)
-	// BinaryTreePrintTree[string](&root, 1)
+	fmt.Println(BinaryTreePrintTree[string](&root))
 
 	// Invert the tree
 	fmt.Println("\n\nInverted Binary Tree:")
 	BinaryTreeInvert[string](&root)
-	BinaryTreePrintTree[string](&root, 1)
-	BinaryTreePrintTree[string](root.Left, 2)
+	fmt.Println(BinaryTreePrintTree[string](&root))
 }
