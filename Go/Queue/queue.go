@@ -37,6 +37,7 @@ func Pop[T any](queue *Queue[T]) T {
 		var noop T
 		output := queue.Bucket[0]
 		queue.Bucket[0] = noop
+		queue.Bucket = queue.Bucket[:0]
 		return output
 	} else {
 		var noop T
@@ -48,14 +49,25 @@ func Pop[T any](queue *Queue[T]) T {
 func TestQueue() {
 	// Initilize the queue
 	var queue Queue[int]
+	numberOfItems := 7
 
 	// Push items into the queue
-	Push(&queue, 1)
-	Push(&queue, 2)
-	Push(&queue, 4)
+	fmt.Println("Adding items into the queue")
+	fmt.Println(fmt.Sprintf("Initial length of the queue: %d elements", len(queue.Bucket)))
+	for i := 1; i <= numberOfItems; i++ {
+		Push(&queue, i)
+	}
+	fmt.Println(fmt.Sprintf("Final length of the queue: %d elements", len(queue.Bucket)))
+	fmt.Println("\n")
 
 	// Print out the various items available
-	fmt.Println(Peek[int](&queue))
+	for i := 0; i < numberOfItems; i++ {
+		fmt.Println(fmt.Sprintf("\tItem Value: %+v", Pop(&queue)))
+		fmt.Println(fmt.Sprintf("\t\tLength of the queue: %d elements", len(queue.Bucket)))
+	}
+
+	// Error checking
+	fmt.Println("\nSince the previous items in the queue have been removed,\n   we handle the error case by providing an empty variable\n   which in this case is a 0.\n")
+	fmt.Println(fmt.Sprintf("\tItem Value: %+v", Pop(&queue)))
 	fmt.Println(fmt.Sprintf("Length of the queue: %d elements", len(queue.Bucket)))
-	fmt.Println(Pop(&queue))
 }
