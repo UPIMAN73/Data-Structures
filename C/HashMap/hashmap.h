@@ -8,3 +8,7 @@
  * @copyright Copyright (c) 2023
  * 
  */
+#ifndef HASHMAP_H_
+#define HASHMAP_H_
+
+#endif

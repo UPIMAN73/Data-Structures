@@ -8,3 +8,7 @@
  * @copyright Copyright (c) 2023
  * 
  */
+#ifndef STACK_H_
+#define STACK_H_
+
+#endif

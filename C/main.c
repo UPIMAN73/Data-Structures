@@ -9,9 +9,13 @@
  * 
  */
 
-#include "./Tree/binarytree.h"
+// #include "./Tree/binarytree.h"
+// #include "./Queue/queue.h"
+#include "./List/list.h"
 
 int main() {
-    TestBinaryTree();
+    // TestBinaryTree();
+    // TestQueue();
+    TestList();
     return 0;
 }
