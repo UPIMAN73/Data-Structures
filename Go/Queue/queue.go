@@ -33,6 +33,7 @@ func Pop[T any](queue *Queue[T]) T {
 		queue.Bucket = queue.Bucket[1:]
 		return output
 	} else if len(queue.Bucket) == 1 {
+		// Setting the first element in the bucket to empty so that removal is easier
 		var noop T
 		output := queue.Bucket[0]
 		queue.Bucket[0] = noop
@@ -44,7 +45,7 @@ func Pop[T any](queue *Queue[T]) T {
 }
 
 // Test function that demonstrates the use of the datastructure
-func TestStack() {
+func TestQueue() {
 	// Initilize the queue
 	var queue Queue[int]
 
@@ -55,5 +56,6 @@ func TestStack() {
 
 	// Print out the various items available
 	fmt.Println(Peek[int](&queue))
+	fmt.Println(fmt.Sprintf("Length of the queue: %d elements", len(queue.Bucket)))
 	fmt.Println(Pop(&queue))
 }

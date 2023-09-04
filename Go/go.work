@@ -6,4 +6,6 @@ use (
 	./List
 	./Tree
 	./Graph
+	./Stack
+	./Queue
 )

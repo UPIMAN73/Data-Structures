@@ -1,13 +1,15 @@
 package main
 
 import (
-	"Graph"
+	"Queue"
 )
 
 // Main
 func main() {
 	// List.TestLinkedList()
 	// Tree.TestBinaryTree()
-	Graph.TestGraph()
+	// Graph.TestGraph()
 	// Graph.TestWeightedGraph()
+	// Stack.TestStack()
+	Queue.TestQueue()
 }
