@@ -14,19 +14,20 @@
 #include <stdlib.h>
 
 #define Queue struct queue_t
-#define QueueDeclare(T) \
-    Queue {\
+#define QueueDeclare(STRUCT_NAME, T) \
+    STRUCT_NAME {\
         size_t size;\
         size_t capacity;\
         T bucket;\
     }
 
-
-QueueDeclare(int);
+// 
+QueueDeclare(Queue, int);
 
 // Initiate the queue using a malloc
 #define NewQueue() (Queue *) malloc(sizeof(Queue *))
 
+// Peek at the first item
 void * Peek(Queue * queue) {
     if (queue != NULL) {
         return (void *) queue;
@@ -35,7 +36,8 @@ void * Peek(Queue * queue) {
         return NULL;
     }
 }
-// Test function that demonstrates the use of the datastructure
+
+// Test function that demonstrates the use of the data-structure
 void TestQueue() {
     Queue * queue = NewQueue();
     queue->capacity = 6;

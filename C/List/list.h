@@ -14,44 +14,100 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// Name a list
-#define List struct list_t
-
 // Declare a list
-#define ListDeclare(T) \
-    List {\
-        T value;\
-        List * next;\
-    }
+#define ListDeclare(LISTNAME, T) LISTNAME { T value; LISTNAME * next; }
 
-#define NewList() (List *) malloc(sizeof(List *))
+// New List Definition
+#define NewObj(objName) (objName *) malloc(sizeof(objName *))
+
+// Name a list type & newList declaration
+#define List struct list_t
+#define ListF struct list_float_t
 
 // Cannot redefine (yet)
-ListDeclare(int);
-// ListDeclare(float);
+ListDeclare(List, int);
+// ListDeclare(ListF, float);
 
+// New list declaration as a statement
+#define NewList NewObj(List)
 
+// Definition of printing a list
+#define PrintList(IteratorListObj) size_t CurrentListObjNumber = 1;\
+    puts("\nList Items:");\
+    while (IteratorListObj != NULL) {\
+        printf("\t%ld\tValue: %d\n", CurrentListObjNumber, IteratorListObj->value);\
+        IteratorListObj = IteratorListObj->next;\
+        CurrentListObjNumber++;\
+    }\
+    CurrentListObjNumber = 0;
+
+// Custom Garbage collection
+#ifdef LIST_GBC_TYPE
+void ListGarbageCollector(void * list) {
+    IteratorListObj = list;
+    void * PreviousListObj = NULL;
+    // Garbage collection
+    while (1) {
+        // Free the previous object
+        if (PreviousListObj != NULL) {
+            free((List *) PreviousListObj);
+        }
+
+        // Previous List Object Definition
+        PreviousListObj = ((void *) IteratorListObj);
+
+        // Iterator list object continuation
+        if (IteratorListObj->next != NULL) {
+            IteratorListObj = IteratorListObj->next;
+        }
+        else {
+            free(IteratorListObj);
+            IteratorListObj = NULL;
+            PreviousListObj = NULL;
+        }
+
+        // Break Iterator
+        if ((void *)IteratorListObj != NULL && (void *)PreviousListObj != NULL) {
+            continue;
+        }
+        else if (IteratorListObj == NULL && PreviousListObj != NULL) {
+            continue;
+        }
+        else {
+            break;
+        }
+    }
+}
+#else
+void ListGarbageCollector(void * list) {
+    free(list);
+    return;
+}
+#endif
+
+// Test function that demonstrates the use of the datastructure
 void TestList() {
     // 
-    List * listInt = NewList();
-    // List * listFloat = NewList();
+    List * list = NewList;
 
     // Setup list int
-    listInt->next = NewList();
-    listInt->value = (int) 1;
+    int i = 1;
+    int targetValue = 10;
+    List * currentNode = list;
+    while (i <= targetValue) {
+        currentNode->value = i;
+        i++;
+        if (i <= targetValue) {
+            currentNode->next = NewList;
+            currentNode = currentNode->next;
+        }
+    }
 
-    // Define list float value
-    // listFloat->value = 3.1415927f;
-
-    // Print out values
-    printf("List Value: %d\n", listInt->value);
-    // printf("List Value: %0.2f\n", listFloat->value);
+    PrintList(list)
 
     // Garbage collection
-    listInt->value = 0;
-    free(listInt->next);
-    free(listInt);
-    // free(listFloat);
+    ListGarbageCollector(list);
+    puts("Cleaned up List objects");
 }
 
 #endif
