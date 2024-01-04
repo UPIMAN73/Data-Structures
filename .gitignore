@@ -19,5 +19,5 @@ main
 # vendor/
 
 # Go workspace file
-go.work
-go.mod
+# go.work
+# go.mod
